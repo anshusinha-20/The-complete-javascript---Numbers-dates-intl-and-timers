@@ -375,3 +375,9 @@ btnSort.addEventListener("click", function (e) {
 
 // // rounding decimals
 // console.log(Number((23.454).toFixed(2)));
+
+/////
+
+// 173. numeric separators
+// const population = 45_000;
+// console.log(population);
