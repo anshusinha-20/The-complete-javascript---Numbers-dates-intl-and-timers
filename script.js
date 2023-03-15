@@ -320,3 +320,24 @@ btnSort.addEventListener("click", function (e) {
 /////////////////////////////////////////////////
 
 // LECTURES
+
+// 170. converting and checking numbers
+// console.log(23 === 23.0);
+// console.log(0.1 + 0.2 === 0.3);
+// console.log(0.1 + 0.2); // 0.30000000000000004 !== 0.3
+
+// // conversion
+// console.log(typeof 23);
+// console.log(typeof "23");
+// console.log(typeof +"23");
+
+// // parsing
+// console.log(Number.parseInt("30px"));
+// console.log(Number.parseFloat("2.5rem"));
+
+// console.log(Number.isNaN(20));
+// console.log(Number.isNaN("20"));
+
+// // check if value is a number
+// console.log(Number.isFinite(20));
+// console.log(Number.isFinite("20"));
