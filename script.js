@@ -341,3 +341,37 @@ btnSort.addEventListener("click", function (e) {
 // // check if value is a number
 // console.log(Number.isFinite(20));
 // console.log(Number.isFinite("20"));
+
+/////
+
+// 171. math and rounding
+// console.log(Math.sqrt(25));
+// console.log(25 ** (1 / 2));
+
+// console.log(Math.max(1, 2, 3, 4, 5));
+// console.log(Math.min(1, 2, 3, 4, 5));
+
+// // finding area of a circle
+// console.log(Math.PI * Number.parseFloat("10px") ** 2);
+
+// // random number between 1 and 6 inclusive
+// console.log(Math.trunc(Math.random() * 6) + 1);
+
+// // random number between two numbers
+// const randomInt = (min, max) => {
+//   return Math.trunc(Math.random() * min) + 1 + (max - min);
+// };
+
+// console.log(randomInt(5, 10));
+
+// // rounding
+// console.log(Math.trunc(23.9));
+
+// console.log(Math.round(24.5));
+
+// console.log(Math.ceil(23.1));
+
+// console.log(Math.floor(23.9));
+
+// // rounding decimals
+// console.log(Number((23.454).toFixed(2)));
