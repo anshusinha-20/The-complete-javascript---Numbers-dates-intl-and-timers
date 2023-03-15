@@ -381,3 +381,33 @@ btnSort.addEventListener("click", function (e) {
 // 173. numeric separators
 // const population = 45_000;
 // console.log(population);
+
+/////
+
+// 175. creating dates
+// const now = new Date();
+// console.log(now);
+
+// // gets the year
+// console.log(now.getFullYear());
+
+// // gets the month
+// console.log(now.getMonth() + 1);
+
+// // gets the date
+// console.log(now.getDate());
+
+// // gets the day of the week
+// console.log(now.getDay());
+
+// // gets the hour
+// console.log(now.getHours());
+
+// // gets the minutes
+// console.log(now.getMinutes());
+
+// // gets the seconds
+// console.log(now.getSeconds());
+
+// // converts to iso string
+// console.log(now.toISOString());
