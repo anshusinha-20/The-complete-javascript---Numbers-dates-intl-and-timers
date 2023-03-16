@@ -327,12 +327,15 @@ btnLoan.addEventListener("click", function (e) {
     loanAmount > 0 &&
     currentAccount.movements.some((mov) => mov > loanAmount * 0.1)
   ) {
-    // adds the loan amount to the current account
-    currentAccount.movements.push(loanAmount);
-    // adds loan date to the current account
-    currentAccount.movementsDates.push(new Date().toISOString());
-    // updates the UI
-    updateUi(currentAccount);
+    // processes loan after given time
+    setTimeout(() => {
+      // adds the loan amount to the current account
+      currentAccount.movements.push(loanAmount);
+      // adds loan date to the current account
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // updates the UI
+      updateUi(currentAccount);
+    }, 2000);
   }
 });
 
@@ -513,3 +516,26 @@ btnSort.addEventListener("click", function (e) {
 //   Math.abs((date2 - date1) / (1000 * 60 * 60 * 24));
 
 // console.log(daysPassed(new Date(2023, 3, 16), new Date(2023, 3, 1)));
+
+/////
+
+// 180. timers: setTimeout and setInterval
+
+// // setTimeout
+// setTimeout(
+//   (name1, name2) => console.log(`Hello ${name1} and ${name2}`),
+//   5000,
+//   "Anshu",
+//   "Sahil"
+// );
+// console.log("Waiting...");
+
+// // setInterval
+// const clock = setInterval(() => {
+//   const now = new Date();
+//   const hour = `${now.getHours()}`.padStart(2, 0);
+//   const minute = `${now.getMinutes()}`.padStart(2, 0);
+//   const second = `${now.getSeconds()}`.padStart(2, 0);
+//   const timer = `${hour}:${minute}:${second}`;
+//   console.log(timer);
+// }, 1000);
