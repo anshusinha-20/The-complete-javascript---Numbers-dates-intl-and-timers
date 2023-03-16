@@ -11,14 +11,14 @@ const account1 = {
   interestRate: 8.7, // %
   pin: 1010,
   movementsDates: [
-    "2023-03-15T15:16:26.550Z",
-    "2023-03-15T15:17:27.550Z",
-    "2023-03-15T15:18:28.550Z",
-    "2023-03-15T15:19:29.550Z",
-    "2023-03-15T15:20:30.550Z",
-    "2023-03-15T15:21:31.550Z",
+    "2023-03-01T15:16:26.550Z",
+    "2023-03-02T15:17:27.550Z",
+    "2023-03-03T15:18:28.550Z",
+    "2023-03-12T15:19:29.550Z",
+    "2023-03-13T15:20:30.550Z",
+    "2023-03-14T15:21:31.550Z",
     "2023-03-15T15:22:32.550Z",
-    "2023-03-15T15:23:33.550Z",
+    "2023-03-16T15:23:33.550Z",
   ],
 };
 
@@ -28,14 +28,14 @@ const account2 = {
   interestRate: 9.0,
   pin: 2020,
   movementsDates: [
-    "2023-03-15T15:16:26.550Z",
-    "2023-03-15T15:17:27.550Z",
-    "2023-03-15T15:18:28.550Z",
-    "2023-03-15T15:19:29.550Z",
-    "2023-03-15T15:20:30.550Z",
-    "2023-03-15T15:21:31.550Z",
+    "2023-03-01T15:16:26.550Z",
+    "2023-03-02T15:17:27.550Z",
+    "2023-03-03T15:18:28.550Z",
+    "2023-03-04T15:19:29.550Z",
+    "2023-03-11T15:20:30.550Z",
+    "2023-03-13T15:21:31.550Z",
     "2023-03-15T15:22:32.550Z",
-    "2023-03-15T15:23:33.550Z",
+    "2023-03-16T15:23:33.550Z",
   ],
 };
 
@@ -45,14 +45,14 @@ const account3 = {
   interestRate: 8.2,
   pin: 3030,
   movementsDates: [
-    "2023-03-15T15:16:26.550Z",
-    "2023-03-15T15:17:27.550Z",
-    "2023-03-15T15:18:28.550Z",
-    "2023-03-15T15:19:29.550Z",
-    "2023-03-15T15:20:30.550Z",
-    "2023-03-15T15:21:31.550Z",
+    "2023-03-01T15:16:26.550Z",
+    "2023-03-02T15:17:27.550Z",
+    "2023-03-03T15:18:28.550Z",
+    "2023-03-04T15:19:29.550Z",
+    "2023-03-05T15:20:30.550Z",
+    "2023-03-14T15:21:31.550Z",
     "2023-03-15T15:22:32.550Z",
-    "2023-03-15T15:23:33.550Z",
+    "2023-03-16T15:23:33.550Z",
   ],
 };
 
@@ -62,11 +62,11 @@ const account4 = {
   interestRate: 8.5,
   pin: 4040,
   movementsDates: [
-    "2023-03-15T15:16:26.550Z",
-    "2023-03-15T15:17:27.550Z",
-    "2023-03-15T15:18:28.550Z",
+    "2023-03-01T15:16:26.550Z",
+    "2023-03-02T15:17:27.550Z",
+    "2023-03-14T15:18:28.550Z",
     "2023-03-15T15:19:29.550Z",
-    "2023-03-15T15:23:19.550Z",
+    "2023-03-16T15:23:19.550Z",
   ],
 };
 
@@ -98,6 +98,35 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+////////// formats movements dates //////////
+
+const formatDate = function (transactionDate) {
+  // calculates the days by find the difference between
+  // today's date and the transaction date
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs((date1 - date2) / (1000 * 60 * 60 * 24)));
+
+  // stores the transaction date
+  const date = `${transactionDate.getDate()}`.padStart(2, 0);
+  const month = `${transactionDate.getMonth() + 1}`.padStart(2, 0);
+  const year = transactionDate.getFullYear();
+  // stores the days passed
+  const daysPassed = calcDaysPassed(new Date(), transactionDate);
+  console.log(daysPassed);
+  // returns calculated day(s)/date
+  if (daysPassed === 0) {
+    return "Today";
+  } else if (daysPassed === 1) {
+    return "Yesterday";
+  } else if (daysPassed <= 7) {
+    return `${daysPassed} days ago`;
+  } else {
+    return `${date}/${month}/${year}`;
+  }
+};
+
+////////// ---------- //////////
+
 ////////// displays the movements of amounts //////////
 
 // this function takes the movements array
@@ -113,12 +142,10 @@ const displayMovements = function (account, sorted) {
   movs.forEach(function (mov, i) {
     // stores the type of the amount
     const type = mov > 0 ? "deposit" : "withdrawal";
-    // stores the movements dates
+    // stores the transactionn date
     const transactionDate = new Date(account.movementsDates[i]);
-    const date = `${transactionDate.getDate()}`.padStart(2, 0);
-    const month = `${transactionDate.getMonth() + 1}`.padStart(2, 0);
-    const year = transactionDate.getFullYear();
-    const displayDate = `${date}/${month}/${year}`;
+    // stores the display date
+    const displayDate = formatDate(transactionDate);
     // stores the updated html
     const html = `
       <div class="movements__row">
@@ -164,7 +191,7 @@ const displayCurrentBalance = function (account) {
 
 ////////// ---------- //////////
 
-////////// adds dates //////////
+////////// adds date //////////
 
 const now = new Date();
 
@@ -477,3 +504,12 @@ btnSort.addEventListener("click", function (e) {
 
 // // converts to iso string
 // console.log(now.toISOString());
+
+/////
+
+// 177. operations with dates
+
+// const daysPassed = (date1, date2) =>
+//   Math.abs((date2 - date1) / (1000 * 60 * 60 * 24));
+
+// console.log(daysPassed(new Date(2023, 3, 16), new Date(2023, 3, 1)));
