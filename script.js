@@ -10,6 +10,16 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 8.7, // %
   pin: 1010,
+  movementsDates: [
+    "2023-03-15T15:16:26.550Z",
+    "2023-03-15T15:17:27.550Z",
+    "2023-03-15T15:18:28.550Z",
+    "2023-03-15T15:19:29.550Z",
+    "2023-03-15T15:20:30.550Z",
+    "2023-03-15T15:21:31.550Z",
+    "2023-03-15T15:22:32.550Z",
+    "2023-03-15T15:23:33.550Z",
+  ],
 };
 
 const account2 = {
@@ -17,6 +27,16 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 9.0,
   pin: 2020,
+  movementsDates: [
+    "2023-03-15T15:16:26.550Z",
+    "2023-03-15T15:17:27.550Z",
+    "2023-03-15T15:18:28.550Z",
+    "2023-03-15T15:19:29.550Z",
+    "2023-03-15T15:20:30.550Z",
+    "2023-03-15T15:21:31.550Z",
+    "2023-03-15T15:22:32.550Z",
+    "2023-03-15T15:23:33.550Z",
+  ],
 };
 
 const account3 = {
@@ -24,6 +44,16 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 8.2,
   pin: 3030,
+  movementsDates: [
+    "2023-03-15T15:16:26.550Z",
+    "2023-03-15T15:17:27.550Z",
+    "2023-03-15T15:18:28.550Z",
+    "2023-03-15T15:19:29.550Z",
+    "2023-03-15T15:20:30.550Z",
+    "2023-03-15T15:21:31.550Z",
+    "2023-03-15T15:22:32.550Z",
+    "2023-03-15T15:23:33.550Z",
+  ],
 };
 
 const account4 = {
@@ -31,6 +61,13 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 8.5,
   pin: 4040,
+  movementsDates: [
+    "2023-03-15T15:16:26.550Z",
+    "2023-03-15T15:17:27.550Z",
+    "2023-03-15T15:18:28.550Z",
+    "2023-03-15T15:19:29.550Z",
+    "2023-03-15T15:23:19.550Z",
+  ],
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -76,12 +113,19 @@ const displayMovements = function (account, sorted) {
   movs.forEach(function (mov, i) {
     // stores the type of the amount
     const type = mov > 0 ? "deposit" : "withdrawal";
+    // stores the movements dates
+    const transactionDate = new Date(account.movementsDates[i]);
+    const date = `${transactionDate.getDate()}`.padStart(2, 0);
+    const month = `${transactionDate.getMonth() + 1}`.padStart(2, 0);
+    const year = transactionDate.getFullYear();
+    const displayDate = `${date}/${month}/${year}`;
     // stores the updated html
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
+        <div class="movements__date">${displayDate}</div>
         <div class="movements__value">₹ ${mov}</div>
       </div>
     `;
@@ -117,6 +161,22 @@ const displayCurrentBalance = function (account) {
 
   labelBalance.textContent = `₹ ${account.balance}`;
 };
+
+////////// ---------- //////////
+
+////////// adds dates //////////
+
+const now = new Date();
+
+const currentDate = `${now.getDate()}`.padStart(2, 0);
+const currentMonth = `${now.getMonth() + 1}`.padStart(2, 0);
+const currentYear = now.getFullYear();
+const currentHour = `${now.getHours()}`.padStart(2, 0);
+const currentMinute = `${now.getMinutes()}`.padStart(2, 0);
+const currentSecond = `${now.getSeconds()}`.padStart(2, 0);
+
+//  displays the current balance date
+labelDate.textContent = `${currentDate}/${currentMonth}/${currentYear}`;
 
 ////////// ---------- //////////
 
@@ -218,6 +278,10 @@ btnTransfer.addEventListener("click", function (e) {
     currentAccount.movements.push(-transferAmount);
     // adds transfer amount to the receiver account
     receiverAccount.movements.push(transferAmount);
+    // adds transfer date to the current account
+    currentAccount.movementsDates.push(new Date().toISOString());
+    // adds transfer date to the receiver account
+    receiverAccount.movementsDates.push(new Date().toISOString());
     // updates the UI
     updateUi(currentAccount);
   }
@@ -238,6 +302,8 @@ btnLoan.addEventListener("click", function (e) {
   ) {
     // adds the loan amount to the current account
     currentAccount.movements.push(loanAmount);
+    // adds loan date to the current account
+    currentAccount.movementsDates.push(new Date().toISOString());
     // updates the UI
     updateUi(currentAccount);
   }
