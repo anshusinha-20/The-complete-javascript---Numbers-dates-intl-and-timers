@@ -98,6 +98,34 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+////////// logs out the user after some specific time //////////
+
+const logOut = function () {
+  // stores 5 minutes time
+  let time = 60 * 5;
+  // function to display timer
+  const tick = function () {
+    const minutes = `${Math.floor(time / 60)}`.padStart(2, 0);
+    const seconds = `${time % 60}`.padStart(2, 0);
+    labelTimer.textContent = `${minutes}:${seconds}`;
+    // user is logged out when time is 0 seconds
+    if (time === 0) {
+      // stops the timer
+      clearInterval(timer);
+      // hides the UI
+      containerApp.style.opacity = 0;
+      // welcome text is changed
+      labelWelcome.textContent = "Log in to get started";
+    }
+    time -= 1;
+  };
+  // exucutes every second
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
+////////// ---------- //////////
+
 ////////// formats movements dates //////////
 
 const formatDate = function (transactionDate) {
@@ -112,7 +140,6 @@ const formatDate = function (transactionDate) {
   const year = transactionDate.getFullYear();
   // stores the days passed
   const daysPassed = calcDaysPassed(new Date(), transactionDate);
-  console.log(daysPassed);
   // returns calculated day(s)/date
   if (daysPassed === 0) {
     return "Today";
@@ -257,7 +284,7 @@ const updateUi = function (account) {
 
 ////////// implements login //////////
 
-let currentAccount;
+let currentAccount, timer;
 
 btnLogin.addEventListener("click", function (e) {
   // prevents the page from reloading
@@ -268,6 +295,12 @@ btnLogin.addEventListener("click", function (e) {
   );
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // if timer is running, clears it and start again
+    if (timer) {
+      clearInterval(timer);
+    }
+    // log out timer starts
+    timer = logOut();
     // opacity is set to 1
     containerApp.style.opacity = 1;
     // welcome text is changed
@@ -311,6 +344,9 @@ btnTransfer.addEventListener("click", function (e) {
     receiverAccount.movementsDates.push(new Date().toISOString());
     // updates the UI
     updateUi(currentAccount);
+    // resets the timer
+    clearInterval(timer);
+    timer = logOut();
   }
 });
 
@@ -335,6 +371,9 @@ btnLoan.addEventListener("click", function (e) {
       currentAccount.movementsDates.push(new Date().toISOString());
       // updates the UI
       updateUi(currentAccount);
+      // resets the timer
+      clearInterval(timer);
+      timer = logOut();
     }, 2000);
   }
 });
